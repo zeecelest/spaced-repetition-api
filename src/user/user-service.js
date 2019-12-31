@@ -71,16 +71,19 @@ const UserService = {
       const [languageHeadId] = await trx
         .into('word')
         .insert(
-          languageWords.map(([original, translation, nextInc]) => ({
+          languageWords.map(([original, translation, nextInc]) => {
+            // console.log(nextInc);
+            return {
             language_id: languageId.id,
             original,
             translation,
             next: nextInc
               ? Number(seq.last_value) + nextInc
               : null
-          })),
+          }}),
           ['id']
         )
+
 
       await trx('language')
         .where('id', languageId.id)
