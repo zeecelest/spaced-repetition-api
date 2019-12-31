@@ -28,6 +28,9 @@ languageRouter
 languageRouter
   .get('/', async (req, res, next) => {
     try {
+      //req.language.id is requesting a word from the database to be translated.
+      //matching the word with the language id and then requesting that language
+      //and returning the translated word.
       const words = await LanguageService.getLanguageWords(
         req.app.get('db'),
         req.language.id,
