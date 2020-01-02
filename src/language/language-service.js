@@ -13,18 +13,22 @@ const LanguageService = {
   },
 
   getLanguageWords(db, language_id) {
-    return db
+    console.log(db)
+    return db 
       .from('word')
-      .select(
-        'id',
-        'language_id',
-        'original',
-        'translation',
-        'next',
-        'memory_value',
-        'correct_count',
-        'incorrect_count')
-      .where({ language_id });
+      .select('*')
+    // return db
+    //   .from('word')
+    //   .select(
+    //     'id',
+    //     'language_id',
+    //     'original',
+    //     'translation',
+    //     'next',
+    //     'memory_value',
+    //     'correct_count',
+    //     'incorrect_count')
+      // .where({ language_id:parseInt(language_id) });
   },
 };
 

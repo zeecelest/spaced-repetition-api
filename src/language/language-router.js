@@ -5,40 +5,45 @@ const { requireAuth } = require('../middleware/jwt-auth')
 const languageRouter = express.Router();
 const jsonBodyParser = express.json();
 
+// languageRouter
+//   .use(requireAuth)
+//   .use(async (req, res, next) => {
+//     try {
+//       console.log(req.params)
+//       console.log(req.body)
+//       const language = await LanguageService.getUsersLanguage(
+//         req.app.get('db'),
+//         req.params.id
+//       );
+
+//       if (!language)
+//         return res.status(404).json({
+//           error: `You don't have any languages`,
+//         });
+
+//       req.language = language;
+//       next();
+//     } catch (error) {
+//       next(error)
+//     }
+//   });
+
 languageRouter
   .use(requireAuth)
-  .use(async (req, res, next) => {
-    try {
-      const language = await LanguageService.getUsersLanguage(
-        req.app.get('db'),
-        req.params.id
-      );
-
-      if (!language)
-        return res.status(404).json({
-          error: `You don't have any languages`,
-        });
-
-      req.language = language;
-      next();
-    } catch (error) {
-      next(error)
-    }
-  });
-
-languageRouter
-  .get('/', async (req, res, next) => {
+  .get('/:id', async (req, res, next) => {
     try {
       //req.language.id is requesting a word from the database to be translated.
       //matching the word with the language id and then requesting that language
       //and returning the translated word.
+      console.log(req.params)
+      console.log(req.body)
       const words = await LanguageService.getLanguageWords(
         req.app.get('db'),
-        req.language.id
+        req.params.id
       );
-
+        console.log(words)
       res.json({
-        language: req.language,
+        language: req.params.id,
         words,
       });
       next();
