@@ -5,12 +5,12 @@ const { requireAuth } = require('../middleware/jwt-auth')
 const languageRouter = express.Router()
 
 languageRouter
-  .use(requireAuth)
+  // .use(requireAuth)
   .use(async (req, res, next) => {
     try {
       const language = await LanguageService.getUsersLanguage(
         req.app.get('db'),
-        req.user.id,
+        req.word,
       )
 
       if (!language)
