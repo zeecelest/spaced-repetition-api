@@ -13,10 +13,10 @@ const LanguageService = {
   },
 
   getLanguageWords(db, language_id) {
-    console.log(db)
+    console.log(db);
     return db 
       .from('word')
-      .select('*')
+      .select('*');
     // return db
     //   .from('word')
     //   .select(

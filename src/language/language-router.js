@@ -1,6 +1,7 @@
 const express = require('express')
 const LanguageService = require('./language-service')
 const { requireAuth } = require('../middleware/jwt-auth')
+const LinkedList = require('./LinkedList');
 
 const languageRouter = express.Router();
 const jsonBodyParser = express.json();
@@ -29,7 +30,7 @@ const jsonBodyParser = express.json();
 //   });
 
 languageRouter
-  .use(requireAuth)
+  // .use(requireAuth)
   .get('/:id', async (req, res, next) => {
     try {
       //req.language.id is requesting a word from the database to be translated.
