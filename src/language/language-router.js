@@ -30,7 +30,38 @@ const jsonBodyParser = express.json();
 //   });
 
 languageRouter
-  .use(requireAuth)
+.use(requireAuth)
+.get('/head', async (req, res, next) => {
+  // implement me
+  console.log('CCCCCCCCCCCCCCCCCCC')
+  try {
+    console.log(req.language)
+    const language = await LanguageService.getUsersLanguage(
+      req.app.get('db'),
+      req.language.user_id
+      // req.params.id
+    );
+    console.log('BBBBBBBBBBBBBBBBBB')
+    const words = await LanguageService.getLanguageWords(
+      req.app.get('db'),
+      req.language.id,
+    );
+    const currentWord = words.find(element => element.id === language.head);
+    const responseObject = {
+      nextWord: currentWord.original,
+      wordCorrectCount: currentWord.correct_count,
+      wordIncorrectCount: currentWord.incorrect_count,
+      totalScore: language.total_score
+    };
+    res.json(responseObject);
+    console.log(responseObject,language, words)
+} catch (error) {
+    next(error);
+  }
+
+
+languageRouter
+  // .use(requireAuth)
   .get('/:id', async (req, res, next) => {
     try {
       //req.language.id is requesting a word from the database to be translated.
@@ -44,39 +75,14 @@ languageRouter
       );
         console.log(words)
       res.json({
-        language: req.params.id,
-        words,
+        // language: req.params.id,
+        words
       });
       next();
     } catch (error) {
       next(error);
     }
   });
-
-languageRouter
-.get('/head', async (req, res, next) => {
-  // implement me
-  try {
-    const language = await LanguageService.getUsersLanguage(
-      req.app.get('db'),
-      req.language.user_id
-      // req.params.id
-    );
-    const words = await LanguageService.getLanguageWords(
-      req.app.get('db'),
-      req.language.id,
-    );
-    const currentWord = words.find(element => element.id === language.head);
-    const responseObject = {
-      nextWord: currentWord.original,
-      wordCorrectCount: currentWord.correct_count,
-      wordIncorrectCount: currentWord.incorrect_count,
-      totalScore: language.total_score
-    };
-    res.json(responseObject);
-} catch (error) {
-    next(error);
-  }
 });
 
 languageRouter
