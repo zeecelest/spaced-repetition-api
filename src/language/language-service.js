@@ -1,5 +1,5 @@
 const LanguageService = {
-  getUsersLanguage(db, user_id) {
+  getUsersLanguage(db, id ) {
     return db
       .from('language')
       .select('*')
@@ -9,7 +9,7 @@ const LanguageService = {
       //   'language.user_id',
       //   'language.head',
       //   'language.total_score')
-      .where({user_id})
+      .where({id})
       .first();
   },
 

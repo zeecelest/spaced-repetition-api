@@ -17,12 +17,15 @@ class LinkedList {
   insertLast(value) {
     if (this.head === null) {
       this.insertFirst(value);
+      console.log('1')
     } else {
       let last = this.head;
+      console.log('2')
       while (last.next !== null) {
         last = last.next;
       }
       last.next = new Node(value, null);
+      // console.log('here')
     }
   }
 

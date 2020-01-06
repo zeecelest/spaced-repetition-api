@@ -18,7 +18,6 @@ async function requireAuth(req, res, next) {
       req.app.get('db'),
       payload.sub,
     )
-
     if (!user)
       return res.status(401).json({ error: 'Unauthorized request' })
 
